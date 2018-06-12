@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
+    
+    let maxTweetSize = 50
 
     @IBOutlet weak var tbTweet: UITableView!
     @IBOutlet weak var tfTweet: UITextField!
@@ -49,29 +51,56 @@ class ViewController: UIViewController, UITextFieldDelegate {
             self.showAlert("Please enter your text!")
             return false
         }
-        else if text.count <= 50 {
+        else if text.count <= maxTweetSize {
             listTweets.append(text)
             let indexPath = IndexPath(row: listTweets.count - 1, section: 0)
             self.tbTweet.insertRows(at: [indexPath], with: .none)
         }
         else {
-            var listTweetsTemp = [String]()
+            //var listTweetsTemp = [String]()
             //var numberOfText
+            
+            var textArray:[[String]]? = [[String]]()
+            textArray!.append([String]())
+            
+            var currentCharInLine = 0
             
             let arrayText = text.split(separator: " ")
             
             for str in arrayText {
-                if str.count > 50 {
-                    self.showAlert("A string span of nonwhite space character > 50")
+                if str.count > maxTweetSize {
+                    self.showAlert("A string span of nonwhite space character > \(maxTweetSize)")
                     return false
                 }
                 else {
-                    
+                    if currentCharInLine == 0 {
+                        textArray![textArray!.count - 1].append(String(str))
+                        currentCharInLine += str.count
+                    }
+                    else {
+                        if ((currentCharInLine + str.count + 1) > maxTweetSize) {
+                            textArray!.append([String]())
+                            // Create new line
+                            textArray![textArray!.count - 1].append(String(str))
+                            currentCharInLine = str.count
+                        }
+                        else {
+                            textArray![textArray!.count - 1].append(String(str))
+                            currentCharInLine += str.count + 1
+                        }
+                    }
                 }
             }
+            
+            textArray = self.getTextArray(textArray!)
+            // add to listTweets
         }
         
         return true
+    }
+    
+    func getTextArray(_ textArray:[[String]]) -> [[String]]? {
+        return textArray
     }
     
     
@@ -134,6 +163,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         //
         let str = listTweets[indexPath.row]
         cell.textLabel?.text = str
+        cell.textLabel?.numberOfLines = 0
         cell.detailTextLabel?.text = "\(str.count)"
         //
         return cell
