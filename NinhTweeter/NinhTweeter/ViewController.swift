@@ -92,19 +92,41 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }
             }
             
-            textArray = self.getTextArray(&textArray!)
-            // add to listTweets
-            
-            print(textArray)
+            if let finalTextArray = self.getTextArray(&textArray!) {
+                // add to listTweets
+                let numberOfLine = finalTextArray.count
+                for i in 0..<numberOfLine {
+                    let prefixStr = "\(i + 1)/\(numberOfLine) "
+                    var text = prefixStr
+                    for str in finalTextArray[i] {
+                        text += " " + str
+                    }
+                    
+                    //
+                    listTweets.append(text)
+                }
+                
+                var indexs = [IndexPath]()
+                for i in 0..<numberOfLine {
+                    let indexPath = IndexPath(row: listTweets.count - i - 1, section: 0)
+                    //
+                    indexs.append(indexPath)
+                }
+                self.tbTweet.insertRows(at: indexs, with: .none)
+            }
+            else {
+                self.showAlert("A string span of nonwhite space character and prefix > \(maxTweetSize)")
+                return false
+            }
         }
         
         return true
     }
     
     func getTextArray(_ textArray:inout [[String]]) -> [[String]]? {
-        let numberOfLine = textArray.count - 1
+        let numberOfLine = textArray.count
         for i in 0..<numberOfLine {
-            let prefixStr = "\(i)/\(numberOfLine)"
+            let prefixStr = "\(i + 1)/\(numberOfLine)"
             let lenghtOfPrefix = prefixStr.count + 1 // 1 for space
             //
             var totalLenght = lenghtOfPrefix
@@ -112,7 +134,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 let str = textArray[i][j]
                 totalLenght += str.count + 1
                 if (totalLenght > 50) {
-                    //if textArray.count == (i + 1) {
+                    //
+                    if (j == 0) { // line empty
+                        return nil
+                    }
+                    //
                     // Create new line
                     var newLine = [String]()
                     for k in j..<textArray[i].count {
@@ -136,10 +162,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     textArray[i] = oldLine
                     
                     return self.getTextArray(&textArray)
-                    //}
-                    //else {
-                    //
-                    //}
                 }
             }
         }
