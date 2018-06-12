@@ -21,6 +21,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.setUpForKeyBoard()
+        
+        tbTweet.tableFooterView = UIView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,8 +38,42 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("TextField return")
+        if self.postTweetWithText(textField.text!) {
+            textField.text = ""
+        }
         return false
     }
+    
+    func postTweetWithText(_ text: String) -> Bool {
+        if text.count == 0 {
+            self.showAlert("Please enter your text!")
+            return false
+        }
+        else if text.count <= 50 {
+            listTweets.append(text)
+            let indexPath = IndexPath(row: listTweets.count - 1, section: 0)
+            self.tbTweet.insertRows(at: [indexPath], with: .none)
+        }
+        else {
+            var listTweetsTemp = [String]()
+            //var numberOfText
+            
+            let arrayText = text.split(separator: " ")
+            
+            for str in arrayText {
+                if str.count > 50 {
+                    self.showAlert("A string span of nonwhite space character > 50")
+                    return false
+                }
+                else {
+                    
+                }
+            }
+        }
+        
+        return true
+    }
+    
     
     // MARK: - Keyboard
     
@@ -93,11 +129,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         var cell : UITableViewCell!
         cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
         }
         //
-        cell.textLabel?.text = listTweets[indexPath.row]
+        let str = listTweets[indexPath.row]
+        cell.textLabel?.text = str
+        cell.detailTextLabel?.text = "\(str.count)"
         //
         return cell
+    }
+}
+
+extension ViewController {
+    func showAlert(_ text: String) {
+        let alert = UIAlertController(title: "", message: text, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
