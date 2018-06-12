@@ -92,14 +92,57 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }
             }
             
-            textArray = self.getTextArray(textArray!)
+            textArray = self.getTextArray(&textArray!)
             // add to listTweets
+            
+            print(textArray)
         }
         
         return true
     }
     
-    func getTextArray(_ textArray:[[String]]) -> [[String]]? {
+    func getTextArray(_ textArray:inout [[String]]) -> [[String]]? {
+        let numberOfLine = textArray.count - 1
+        for i in 0..<numberOfLine {
+            let prefixStr = "\(i)/\(numberOfLine)"
+            let lenghtOfPrefix = prefixStr.count + 1 // 1 for space
+            //
+            var totalLenght = lenghtOfPrefix
+            for j in 0..<textArray[i].count  {
+                let str = textArray[i][j]
+                totalLenght += str.count + 1
+                if (totalLenght > 50) {
+                    //if textArray.count == (i + 1) {
+                    // Create new line
+                    var newLine = [String]()
+                    for k in j..<textArray[i].count {
+                        newLine.append(textArray[i][k])
+                    }
+                    if textArray.count != (i + 1) {
+                        newLine += textArray[i + 1]
+                    }
+                    // Make old line
+                    var oldLine = [String]()
+                    for l in 0..<j {
+                        oldLine.append(textArray[i][l])
+                    }
+                    if textArray.count != (i + 1) {
+                        textArray[i + 1] = newLine
+                    }
+                    else {
+                        textArray.append(newLine)
+                    }
+                    
+                    textArray[i] = oldLine
+                    
+                    return self.getTextArray(&textArray)
+                    //}
+                    //else {
+                    //
+                    //}
+                }
+            }
+        }
         return textArray
     }
     
