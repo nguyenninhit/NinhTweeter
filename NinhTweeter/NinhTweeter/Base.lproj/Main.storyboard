@@ -37,18 +37,14 @@
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cv2-5V-MZD">
-                                        <rect key="frame" x="10" y="12" width="309" height="30"/>
+                                        <rect key="frame" x="10" y="12" width="355" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0M-Kg-bl7">
-                                        <rect key="frame" x="329" y="1" width="36" height="54"/>
-                                        <state key="normal" title="Send"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="send"/>
                                         <connections>
-                                            <action selector="btnSendAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JXy-5h-oEb"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="VBl-jh-HfX"/>
                                         </connections>
-                                    </button>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -56,12 +52,9 @@
                                     <constraint firstAttribute="trailing" secondItem="s8o-r8-Ggt" secondAttribute="trailing" id="A72-2B-zgO"/>
                                     <constraint firstItem="Cv2-5V-MZD" firstAttribute="leading" secondItem="yRX-rs-Zbc" secondAttribute="leading" constant="10" id="Jxx-zQ-Oho"/>
                                     <constraint firstAttribute="height" constant="55" id="b4Z-Dn-58K"/>
-                                    <constraint firstAttribute="bottom" secondItem="r0M-Kg-bl7" secondAttribute="bottom" id="gE8-31-ux0"/>
                                     <constraint firstItem="s8o-r8-Ggt" firstAttribute="top" secondItem="yRX-rs-Zbc" secondAttribute="top" id="iGP-Vg-kfB"/>
                                     <constraint firstItem="Cv2-5V-MZD" firstAttribute="centerY" secondItem="yRX-rs-Zbc" secondAttribute="centerY" id="jlK-iR-eLB"/>
-                                    <constraint firstAttribute="trailing" secondItem="r0M-Kg-bl7" secondAttribute="trailing" constant="10" id="kPF-g8-tNd"/>
-                                    <constraint firstItem="r0M-Kg-bl7" firstAttribute="top" secondItem="s8o-r8-Ggt" secondAttribute="bottom" id="m6s-Pf-hO8"/>
-                                    <constraint firstItem="r0M-Kg-bl7" firstAttribute="leading" secondItem="Cv2-5V-MZD" secondAttribute="trailing" constant="10" id="oMc-L6-n3l"/>
+                                    <constraint firstAttribute="trailing" secondItem="Cv2-5V-MZD" secondAttribute="trailing" constant="10" id="ve4-y3-y7r"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -70,7 +63,7 @@
                             <constraint firstItem="yRX-rs-Zbc" firstAttribute="top" secondItem="Znu-to-gIr" secondAttribute="bottom" id="0bk-gV-yXd"/>
                             <constraint firstItem="Znu-to-gIr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DH2-N3-Tgk"/>
                             <constraint firstItem="yRX-rs-Zbc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="QfM-D6-Hn7"/>
-                            <constraint firstItem="yRX-rs-Zbc" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="SzF-ID-OS0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="yRX-rs-Zbc" secondAttribute="bottom" id="SzF-ID-OS0"/>
                             <constraint firstItem="yRX-rs-Zbc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="WLC-nj-Y8e"/>
                             <constraint firstItem="Znu-to-gIr" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="nic-w7-4QD"/>
                             <constraint firstItem="Znu-to-gIr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zCt-3U-ffN"/>
@@ -78,7 +71,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="btnSend" destination="r0M-Kg-bl7" id="EIF-YD-Zxj"/>
+                        <outlet property="lcVTextBottom" destination="SzF-ID-OS0" id="gj1-7b-qCz"/>
                         <outlet property="tbTweet" destination="Znu-to-gIr" id="ccs-8n-B72"/>
                         <outlet property="tfTweet" destination="Cv2-5V-MZD" id="na5-Wn-0JP"/>
                     </connections>
